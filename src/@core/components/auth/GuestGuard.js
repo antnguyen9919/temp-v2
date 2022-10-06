@@ -22,7 +22,7 @@ const GuestGuard = props => {
     }
   }, [user, loading, router.route])
 
-  if (loading || (!loading && user)) {
+  if (loading || (!loading && user !== null)) {
     return fallback
   }
 

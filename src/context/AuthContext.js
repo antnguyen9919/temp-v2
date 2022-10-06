@@ -32,35 +32,36 @@ const AuthProvider = ({ children }) => {
 
   // ** Hooks
   const router = useRouter()
-  // useEffect(() => {
-  //   const initAuth = async () => {
-  //     setIsInitialized(true)
-  //     const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
-  //     if (storedToken) {
-  //       setLoading(true)
-  //       await axios
-  //         .get(authConfig.meEndpoint, {
-  //           headers: {
-  //             Authorization: storedToken
-  //           }
-  //         })
-  //         .then(async response => {
-  //           setLoading(false)
-  //           setUser({ ...response.data.userData })
-  //         })
-  //         .catch(() => {
-  //           localStorage.removeItem('userData')
-  //           localStorage.removeItem('refreshToken')
-  //           localStorage.removeItem('accessToken')
-  //           setUser(null)
-  //           setLoading(false)
-  //         })
-  //     } else {
-  //       setLoading(false)
-  //     }
-  //   }
-  //   initAuth()
-  // }, [])
+  useEffect(() => {
+    const initAuth = async () => {
+      setIsInitialized(true)
+      const storedToken = window.localStorage.getItem(authConfig.storageTokenKeyName)
+      if (storedToken) {
+        setLoading(true)
+        await axios
+          .get(authConfig.meEndpoint, {
+            headers: {
+              Authorization: storedToken
+            }
+          })
+          .then(async response => {
+            setLoading(false)
+            setUser({ ...response.data.userData })
+          })
+
+          .catch(() => {
+            localStorage.removeItem('userData')
+            localStorage.removeItem('refreshToken')
+            localStorage.removeItem('accessToken')
+            setUser(null)
+            setLoading(false)
+          })
+      } else {
+        setLoading(false)
+      }
+    }
+    initAuth()
+  }, [])
 
   const handleLogin = (params, errorCallback) => {
     axios

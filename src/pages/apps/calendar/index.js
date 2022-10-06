@@ -30,6 +30,7 @@ import {
 
 // ** Third Party Styles Imports
 import 'react-datepicker/dist/react-datepicker.css'
+import Head from 'next/head'
 
 // ** CalendarColors
 const calendarsColor = {
@@ -63,63 +64,68 @@ const AppCalendar = () => {
   const handleAddEventSidebarToggle = () => setAddEventSidebarOpen(!addEventSidebarOpen)
 
   return (
-    <CalendarWrapper
-      className='app-calendar'
-      sx={{
-        boxShadow: skin === 'bordered' ? 0 : 6,
-        ...(skin === 'bordered' && { border: theme => `1px solid ${theme.palette.divider}` })
-      }}
-    >
-      <SidebarLeft
-        store={store}
-        mdAbove={mdAbove}
-        dispatch={dispatch}
-        calendarsColor={calendarsColor}
-        leftSidebarOpen={leftSidebarOpen}
-        leftSidebarWidth={leftSidebarWidth}
-        handleSelectEvent={handleSelectEvent}
-        handleAllCalendars={handleAllCalendars}
-        handleCalendarsUpdate={handleCalendarsUpdate}
-        handleLeftSidebarToggle={handleLeftSidebarToggle}
-        handleAddEventSidebarToggle={handleAddEventSidebarToggle}
-      />
-      <Box
+    <>
+      <Head>
+        <title>Ariadnemaps - Calendar</title>
+      </Head>
+      <CalendarWrapper
+        className='app-calendar'
         sx={{
-          p: 5,
-          pb: 0,
-          flexGrow: 1,
-          borderRadius: 1,
-          boxShadow: 'none',
-          backgroundColor: 'background.paper',
-          ...(mdAbove ? { borderTopLeftRadius: 0, borderBottomLeftRadius: 0 } : {})
+          boxShadow: skin === 'bordered' ? 0 : 6,
+          ...(skin === 'bordered' && { border: theme => `1px solid ${theme.palette.divider}` })
         }}
       >
-        <Calendar
+        <SidebarLeft
           store={store}
+          mdAbove={mdAbove}
           dispatch={dispatch}
-          direction={direction}
-          updateEvent={updateEvent}
-          calendarApi={calendarApi}
           calendarsColor={calendarsColor}
-          setCalendarApi={setCalendarApi}
+          leftSidebarOpen={leftSidebarOpen}
+          leftSidebarWidth={leftSidebarWidth}
           handleSelectEvent={handleSelectEvent}
+          handleAllCalendars={handleAllCalendars}
+          handleCalendarsUpdate={handleCalendarsUpdate}
           handleLeftSidebarToggle={handleLeftSidebarToggle}
           handleAddEventSidebarToggle={handleAddEventSidebarToggle}
         />
-      </Box>
-      <AddEventSidebar
-        store={store}
-        dispatch={dispatch}
-        addEvent={addEvent}
-        updateEvent={updateEvent}
-        deleteEvent={deleteEvent}
-        calendarApi={calendarApi}
-        drawerWidth={addEventSidebarWidth}
-        handleSelectEvent={handleSelectEvent}
-        addEventSidebarOpen={addEventSidebarOpen}
-        handleAddEventSidebarToggle={handleAddEventSidebarToggle}
-      />
-    </CalendarWrapper>
+        <Box
+          sx={{
+            p: 5,
+            pb: 0,
+            flexGrow: 1,
+            borderRadius: 1,
+            boxShadow: 'none',
+            backgroundColor: 'background.paper',
+            ...(mdAbove ? { borderTopLeftRadius: 0, borderBottomLeftRadius: 0 } : {})
+          }}
+        >
+          <Calendar
+            store={store}
+            dispatch={dispatch}
+            direction={direction}
+            updateEvent={updateEvent}
+            calendarApi={calendarApi}
+            calendarsColor={calendarsColor}
+            setCalendarApi={setCalendarApi}
+            handleSelectEvent={handleSelectEvent}
+            handleLeftSidebarToggle={handleLeftSidebarToggle}
+            handleAddEventSidebarToggle={handleAddEventSidebarToggle}
+          />
+        </Box>
+        <AddEventSidebar
+          store={store}
+          dispatch={dispatch}
+          addEvent={addEvent}
+          updateEvent={updateEvent}
+          deleteEvent={deleteEvent}
+          calendarApi={calendarApi}
+          drawerWidth={addEventSidebarWidth}
+          handleSelectEvent={handleSelectEvent}
+          addEventSidebarOpen={addEventSidebarOpen}
+          handleAddEventSidebarToggle={handleAddEventSidebarToggle}
+        />
+      </CalendarWrapper>
+    </>
   )
 }
 
