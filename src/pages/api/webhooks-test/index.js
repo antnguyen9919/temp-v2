@@ -45,5 +45,5 @@ export default async function (req, res) {
   //   return response
 
   let abc = await addDoc(alertRef, { message: 'received' })
-  if (abc) return res.status(200).json({ message: 'OK' })
+  return res.status(200).json({ message: 'OK' })
 }
