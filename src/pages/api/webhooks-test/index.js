@@ -44,6 +44,6 @@ export default async function (req, res) {
 
   //   return response
 
-  let abc = await addDoc(alertRef, { message: 'received' })
+  await addDoc(alertRef, { message: 'received' })
   return res.status(200).json({ message: 'OK' })
 }
