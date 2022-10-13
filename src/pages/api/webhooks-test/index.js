@@ -1,5 +1,6 @@
 import { db } from 'src/configs/firebase-admin'
 export default function (req, res) {
+  console.log('Started')
   if (req.method === 'POST') {
     const {
       receiver,
@@ -19,6 +20,7 @@ export default function (req, res) {
     } = req.body
     db.collection('alerts')
       .add({
+        id: 'worked',
         receiver: receiver ? receiver : '',
         status: status ? status : '',
         orgId: orgId ? orgId : '',
@@ -34,10 +36,29 @@ export default function (req, res) {
         state: state ? state : '',
         message: message ? message : ''
       })
-      .then(res => console.log(res))
-    return res.status(200).json({ message: 'Hello' })
+      .then(res => {
+        if (res) {
+          console.log(res)
+        }
+      })
+      .catch(error => {
+        if (error) {
+          console.log(error.message)
+          return res.json({ error: error.message })
+        }
+      })
   } else {
-    db.collection('alerts').add({ message: 'No body' })
-    return res.status(200).json({ message: 'nothing happened' })
+    db.collection('alerts')
+      .add({ message: 'No body' })
+      .then(res => {
+        if (res) console.log('Ok boys')
+      })
+      .catch(e => {
+        if (e) {
+          console.log(e.message)
+          return res.json({ error: e.message })
+        }
+      })
   }
+  return res.status(200).json({ message: 'OK' })
 }
