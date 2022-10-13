@@ -22,6 +22,8 @@ import CrmStatisticsCard from 'src/views/dashboards/crm/CrmStatisticsCard'
 import CrmMeetingSchedule from 'src/views/dashboards/crm/CrmMeetingSchedule'
 import CrmDeveloperMeetup from 'src/views/dashboards/crm/CrmDeveloperMeetup'
 import CrmActivityTimeline from 'src/views/dashboards/crm/CrmActivityTimeline'
+import PageHeader from 'src/@core/components/page-header'
+import { Typography } from '@mui/material'
 
 const data = [
   {
@@ -46,6 +48,17 @@ const data = [
 const CRMDashboard = () => {
   return (
     <ApexChartWrapper>
+      <div>
+        <PageHeader
+          title={<Typography variant='h5'>Analytics Summary</Typography>}
+          subtitle={
+            <Typography variant='body2'>
+              A role provided access to predefined menus and features so that depending on assigned role an
+              administrator can have access to what he need
+            </Typography>
+          }
+        />
+      </div>
       <Grid container spacing={6}>
         <Grid item xs={12} sm={6} md={3} sx={{ pt: theme => `${theme.spacing(12.25)} !important` }}>
           <CardStatisticsCharacter data={data[0]} />
