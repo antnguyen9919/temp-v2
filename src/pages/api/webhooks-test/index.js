@@ -1,5 +1,8 @@
-import { db } from 'src/configs/firebase-admin'
+// import { db } from 'src/configs/firebase-admin'
+import { firestore } from 'src/configs/firebase-client'
+import { collection, addDoc } from 'firebase/firestore'
 export default async function (req, res) {
+  let alertRef = collection(firestore, 'alerts')
   //   console.log('Started')
   //   let response
   //   let received = 0
@@ -41,6 +44,6 @@ export default async function (req, res) {
 
   //   return response
 
-  let abc = await db.collection('alerts').add({ message: 'Received' })
+  let abc = await addDoc(alertRef, { message: 'received' })
   if (abc) return res.status(200).json({ message: 'OK' })
 }

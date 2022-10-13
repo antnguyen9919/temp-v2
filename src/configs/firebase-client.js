@@ -1,6 +1,7 @@
 import { initializeApp, getApp, getApps } from 'firebase/app'
 import { getAnalytics } from 'firebase/analytics'
 import { getAuth } from 'firebase/auth'
+import { getFirestore } from 'firebase-admin/firestore'
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY ? process.env.NEXT_PUBLIC_FIREBASE_API_KEY : '',
@@ -14,6 +15,7 @@ const firebaseConfig = {
 let analytics
 const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig)
 const auth = getAuth(app)
+const firestore = getFirestore(app)
 // const analytics = getAnalytics(app);
 if (typeof window !== 'undefined' && process.env.NODE_ENV === 'production') analytics = getAnalytics(app)
-export { auth, analytics }
+export { auth, analytics, firestore }
