@@ -46,6 +46,8 @@ import { fetchData, deleteUser } from 'src/store/apps/user'
 // ** Custom Components Imports
 import TableHeader from 'src/views/apps/user/list/TableHeader'
 import AddUserDrawer from 'src/views/apps/user/list/AddUserDrawer'
+import RolesCards from 'src/views/apps/roles/RoleCards'
+import PageHeader from 'src/@core/components/page-header'
 
 // ** Vars
 const userRoleObj = {
@@ -77,13 +79,13 @@ const AvatarWithoutImageLink = styled(Link)(({ theme }) => ({
 const renderClient = row => {
   if (row.avatar.length) {
     return (
-      <AvatarWithImageLink href={`/apps/user/view/${row.id}`}>
+      <AvatarWithImageLink href={`/management/client/view/${row.id}`}>
         <CustomAvatar src={row.avatar} sx={{ mr: 3, width: 30, height: 30 }} />
       </AvatarWithImageLink>
     )
   } else {
     return (
-      <AvatarWithoutImageLink href={`/apps/user/view/${row.id}`}>
+      <AvatarWithoutImageLink href={`/management/client/view/${row.id}`}>
         <CustomAvatar
           skin='light'
           color={row.avatarColor || 'primary'}
@@ -148,7 +150,7 @@ const RowOptions = ({ id }) => {
         PaperProps={{ style: { minWidth: '8rem' } }}
       >
         <MenuItem sx={{ p: 0 }}>
-          <Link href={`/apps/user/view/${id}`} passHref>
+          <Link href={`/management/client/view/${id}`} passHref>
             <MenuItemLink>
               <EyeOutline fontSize='small' sx={{ mr: 2 }} />
               View
@@ -181,7 +183,7 @@ const columns = [
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           {renderClient(row)}
           <Box sx={{ display: 'flex', alignItems: 'flex-start', flexDirection: 'column' }}>
-            <Link href={`/apps/user/view/${id}`} passHref>
+            <Link href={`/management/client/view/${id}`} passHref>
               <Typography
                 noWrap
                 component='a'
@@ -191,7 +193,7 @@ const columns = [
                 {fullName}
               </Typography>
             </Link>
-            <Link href={`/apps/user/view/${id}`} passHref>
+            <Link href={`/management/client/view/${id}`} passHref>
               <Typography noWrap component='a' variant='caption' sx={{ textDecoration: 'none' }}>
                 @{username}
               </Typography>
@@ -313,6 +315,20 @@ const UserList = () => {
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
+        <>
+          <PageHeader
+            title={<Typography variant='h5'>List of Clients</Typography>}
+            subtitle={
+              <Typography variant='body2'>
+                A role provided access to predefined menus and features so that depending on assigned role an
+                administrator can have access to what he need
+              </Typography>
+            }
+          />
+          <Grid item xs={12} sx={{ mb: 4 }}>
+            <RolesCards />
+          </Grid>
+        </>
         <Card>
           <CardHeader title='Search Filters' />
           <CardContent>

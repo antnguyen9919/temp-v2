@@ -11,33 +11,25 @@ import { auth } from 'src/configs/firebase-client'
 
 const AuthGuard = props => {
   const { children, fallback } = props
-  const { user, loading, setLoading } = useAuth()
+  const { user, loading } = useAuth()
   const router = useRouter()
   useEffect(() => {
-    // console.log('loading: ', auth.loading, 'user: ', auth.user)
     if (!router.isReady) {
       return
     }
-    setLoading(true)
-    const subscriber = onAuthStateChanged(auth, authUser => {
-      if (!authUser) {
-        setLoading(false)
-        router.replace('/login', { permanent: false })
-        // if (router.asPath !== '/') {
-        //   router.replace({
-        //     pathname: '/login',
-        //     query: { returnUrl: router.asPath }
-        //   })
-        // } else {
-        //   router.replace('/login')
-        // }
+    if (!loading && user === null) {
+      if (router.asPath !== '/') {
+        router.replace({
+          pathname: '/login',
+          query: { returnUrl: router.asPath }
+        })
+      } else {
+        router.replace('/login')
       }
-    })
-    setLoading(false)
-    return subscriber
-  }, [router.route, auth, onAuthStateChanged])
+    }
+  }, [user, loading, router.route])
 
-  if (loading || user === null) {
+  if (loading || (!loading && user === null)) {
     return fallback
   }
 
@@ -45,3 +37,27 @@ const AuthGuard = props => {
 }
 
 export default AuthGuard
+
+// useEffect(() => {
+//   // console.log('loading: ', auth.loading, 'user: ', auth.user)
+//   if (!router.isReady) {
+//     return
+//   }
+//   setLoading(true)
+//   const subscriber = onAuthStateChanged(auth, authUser => {
+//     if (!authUser) {
+//       setLoading(false)
+//       router.replace('/login', { permanent: false })
+//       // if (router.asPath !== '/') {
+//       //   router.replace({
+//       //     pathname: '/login',
+//       //     query: { returnUrl: router.asPath }
+//       //   })
+//       // } else {
+//       //   router.replace('/login')
+//       // }
+//     }
+//   })
+//   setLoading(false)
+//   return subscriber
+// }, [router.route, auth, onAuthStateChanged])

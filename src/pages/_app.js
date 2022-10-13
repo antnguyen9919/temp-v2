@@ -107,7 +107,6 @@ const App = props => {
           <meta name='viewport' content='initial-scale=1, width=device-width' />
         </Head>
         <AuthFirebaseProvider>
-          {/* <AuthProvider> */}
           <SettingsProvider {...(setConfig ? { pageSettings: setConfig() } : {})}>
             <SettingsConsumer>
               {({ settings }) => {
@@ -128,7 +127,6 @@ const App = props => {
               }}
             </SettingsConsumer>
           </SettingsProvider>
-          {/* </AuthProvider> */}
         </AuthFirebaseProvider>
       </CacheProvider>
     </Provider>

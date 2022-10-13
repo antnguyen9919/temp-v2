@@ -28,65 +28,56 @@ import NewspaperIcon from '@mui/icons-material/Newspaper'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 const navigation = () => {
   return [
-    {
-      title: 'Dashboards',
-      icon: BarChartIcon,
-      // badgeContent: 'new',
-      // badgeColor: 'error',
-      children: [
-        {
-          action: 'read',
-          subject: 'default-ds-nav',
+    // {
+    //   title: 'Dashboards',
+    //   icon: BarChartIcon,
+    //   // badgeContent: 'new',
+    //   // badgeColor: 'error',
+    //   children: [
+    //     {
+    //       action: 'read',
+    //       subject: 'default-ds-nav',
 
-          title: 'CRM',
-          path: '/dashboards/crm'
-        },
-        { action: 'read', subject: 'default-ds-nav', title: 'Analytics', path: '/dashboards/analytics' },
-        { action: 'read', subject: 'default-ds-nav', title: 'eCommerce', path: '/dashboards/ecommerce' }
-      ]
+    //       title: 'CRM',
+    //       path: '/dashboards/crm'
+    //     },
+    //     { action: 'read', subject: 'default-ds-nav', title: 'Analytics', path: '/dashboards/analytics' },
+    //     { action: 'read', subject: 'default-ds-nav', title: 'eCommerce', path: '/dashboards/ecommerce' }
+    //   ]
+    // },
+    {
+      title: 'Overview',
+      icon: HomeOutline,
+      path: '/overview',
+      action: 'read',
+      subject: 'overview'
+      // badgeContent: '3',
+      // badgeColor: 'error'
+    },
+    {
+      sectionTitle: 'Analytics',
+      action: 'read',
+      subject: 'analytics-nav'
     },
 
     {
-      title: 'Admin Dashboards',
+      title: 'Client Dashboards',
       icon: BarChartIcon,
 
       children: [
         {
           action: 'read',
-          subject: 'admin-ds-nav',
-          title: 'Overview',
-          path: '/admin-dashboards/overview'
+          subject: 'analytics-dashboards',
+          title: 'Summary',
+          path: '/dashboards/summary'
         },
         {
           action: 'read',
-          subject: 'admin-ds-nav',
-          title: 'Summary',
-          path: '/admin-dashboards/detailed'
-        },
-        {
-          title: 'Client Dashboards',
-
-          children: [
-            {
-              action: 'read',
-              subject: 'client-ds-nav',
-              title: '- Overview',
-              path: '/client-dashboards/overview'
-            },
-            {
-              action: 'read',
-              subject: 'client-ds-nav',
-              title: '- Summary',
-              path: '/client-dashboards/detailed'
-            }
-            // {
-            //   action: 'read',
-            //   subject: 'client-ds-nav',
-            //   title: 'Detailed Reports',
-            //   path: '/demo-dashboards/detailed-reports'
-            // }
-          ]
+          subject: 'analytics-dashboards',
+          title: 'Advanced Analytics',
+          path: '/dashboards/advanced-analytics'
         }
+
         // {
         //   action: 'read',
         //   subject: 'admin-ds-nav',
@@ -95,6 +86,12 @@ const navigation = () => {
         // }
       ]
     },
+    // {
+    //   title: 'Alert',
+    //   icon: HomeOutline,
+    //   badgeContent: '3',
+    //   badgeColor: 'error'
+    // },
 
     {
       title: 'Demo Dashboards',
@@ -152,7 +149,13 @@ const navigation = () => {
       subject: 'users-list-nav',
       title: 'Users List',
       icon: GroupIcon,
-      path: '/apps/user/list'
+      children: [
+        {
+          title: 'Team members',
+          path: '/management/member/list'
+        },
+        { path: '/management/client/list', title: 'Clients' }
+      ]
     },
     {
       title: 'Invoice',

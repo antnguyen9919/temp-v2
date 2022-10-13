@@ -129,4 +129,9 @@ const AccountSettings = () => {
   )
 }
 
+AccountSettings.acl = {
+  action: 'read',
+  subject: 'account-settings'
+}
+
 export default AccountSettings

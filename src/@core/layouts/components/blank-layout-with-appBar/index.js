@@ -100,7 +100,7 @@ const BlankLayoutAppBar = () => {
                 textTransform: 'uppercase'
               }}
             >
-              {themeConfig.templateName}
+              Ariadnemaps
             </Typography>
           </StyledLink>
         </Link>

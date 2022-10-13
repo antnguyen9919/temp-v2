@@ -101,7 +101,7 @@ const AppBarContent = props => {
                 textTransform: 'uppercase'
               }}
             >
-              {themeConfig.templateName}
+              Ariadnemaps
             </Typography>
           </StyledLink>
         </Link>

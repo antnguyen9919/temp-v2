@@ -1,0 +1,36 @@
+UserRecord {
+  uid: '4yzu5W6rxCVLZDQ30e6unHdQz1K2',
+  email: 'james@test.com',
+  emailVerified: false,
+  displayName: 'james',
+  photoURL: undefined,
+  phoneNumber: '+4917641317142',
+  disabled: false,
+  metadata: UserMetadata {
+    creationTime: 'Fri, 07 Oct 2022 12:24:49 GMT',
+    lastSignInTime: null,
+    lastRefreshTime: null
+  },
+  providerData: [
+    UserInfo {
+      uid: '+4917641317142',
+      displayName: undefined,
+      email: undefined,
+      photoURL: undefined,
+      providerId: 'phone',
+      phoneNumber: '+4917641317142'
+    },
+    UserInfo {
+      uid: 'james@test.com',
+      displayName: 'james',
+      email: 'james@test.com',
+      photoURL: undefined,
+      providerId: 'password',
+      phoneNumber: undefined
+    }
+  ],
+  passwordHash: undefined,
+  passwordSalt: undefined,
+  tokensValidAfterTime: 'Fri, 07 Oct 2022 12:24:49 GMT',
+  tenantId: undefined
+}

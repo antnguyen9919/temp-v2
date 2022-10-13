@@ -89,17 +89,27 @@ const TabAccount = ({ user, loading }) => {
 
           <Grid item xs={12} sm={6}>
             <TextField
+              // disabled
               fullWidth
               label='Username'
-              placeholder={user && user.username ? user.username : 'johnDoe'}
-              defaultValue={user && user.username ? user.username : 'johnDoe'}
+              placeholder={
+                !loading && user && user.username ? user.username : 'Username can also be used to log into your account'
+              }
+              defaultValue={!loading && user && user.username ? user.username : ''}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Name' placeholder='John Doe' defaultValue='John Doe' />
+            <TextField
+              disabled
+              fullWidth
+              label='Name'
+              placeholder={user && user.name ? user.name : ''}
+              defaultValue={user && user.name ? user.name : ''}
+            />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
+              disabled
               fullWidth
               type='email'
               label='Email'
@@ -108,7 +118,7 @@ const TabAccount = ({ user, loading }) => {
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
+            <FormControl disabled fullWidth>
               <InputLabel>Role</InputLabel>
               <Select label='Role' defaultValue='admin'>
                 <MenuItem value='admin'>Admin</MenuItem>
@@ -120,7 +130,7 @@ const TabAccount = ({ user, loading }) => {
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
+            <FormControl disabled fullWidth>
               <InputLabel>Status</InputLabel>
               <Select label='Status' defaultValue='active'>
                 <MenuItem value='active'>Active</MenuItem>
@@ -130,7 +140,13 @@ const TabAccount = ({ user, loading }) => {
             </FormControl>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField fullWidth label='Company' placeholder='ABC Pvt. Ltd.' defaultValue='ABC Pvt. Ltd.' />
+            <TextField
+              disabled
+              fullWidth
+              label='Company'
+              placeholder={!loading && user && user.company ? user.company : ''}
+              defaultValue={!loading && user && user.company ? user.company : ''}
+            />
           </Grid>
 
           {openAlert ? (

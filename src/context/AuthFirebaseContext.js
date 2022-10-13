@@ -56,19 +56,52 @@ const AuthFirebaseProvider = ({ children }) => {
   const router = useRouter()
 
   useEffect(() => {
-    setLoading(true)
     const unsubscribe = onAuthStateChanged(auth, authUser => {
       if (authUser) {
-        setUser({
-          email: authUser.email,
-          user_id: authUser.uid,
-          photoURL: authUser.photoURL,
-          tel: authUser.phoneNumber,
-          email_verified: authUser.emailVerified,
-          name: authUser.displayName,
-          role: 'admin'
-        })
-        setLoading(false)
+        authUser
+          .getIdTokenResult(true)
+          .then(res => {
+            if (res.claims) {
+              setUser({
+                email: authUser.email,
+                user_id: authUser.uid,
+                photoURL: authUser.photoURL,
+                tel: authUser.phoneNumber,
+                email_verified: authUser.emailVerified,
+                company: res.claims.company ? res.claims.company : '',
+                name: authUser.displayName,
+                role: res.claims.role ? res.claims.role : 'guest',
+                is_ariadne: res.claims.is_ariadne ? res.claims.is_ariadne : false,
+                username: res.claims.username ? res.claims.username : null
+              })
+              setLoading(false)
+            } else {
+              setUser({
+                email: authUser.email,
+                user_id: authUser.uid,
+                photoURL: authUser.photoURL,
+                tel: authUser.phoneNumber,
+                email_verified: authUser.emailVerified,
+                name: authUser.displayName,
+                role: 'guest',
+                company: '',
+                username: '',
+                is_ariadne: false
+              })
+              setLoading(false)
+            }
+          })
+          .catch(e => console.log(e))
+        // setUser({
+        //   ...user,
+        //   email: authUser.email,
+        //   user_id: authUser.uid,
+        //   photoURL: authUser.photoURL,
+        //   tel: authUser.phoneNumber,
+        //   email_verified: authUser.emailVerified,
+        //   name: authUser.displayName,
+        //   role: 'admin'
+        // })
       } else {
         setUser(null)
         setLoading(false)
@@ -77,25 +110,52 @@ const AuthFirebaseProvider = ({ children }) => {
 
     return () => unsubscribe()
   }, [])
-
+  console.log(user)
   const handleLogin = (params, errorCallback) => {
-    setLoading(true)
+    // setLoading(true)
     signInWithEmailAndPassword(auth, params.email, params.password)
       .then(userCredential => {
         const returnUrl = router.query.returnUrl
-        setUser({
-          email: userCredential.user.email,
-          user_id: userCredential.user.uid,
-          photoURL: userCredential.user.photoURL,
-          tel: userCredential.user.phoneNumber,
-          email_verified: userCredential.user.emailVerified,
-          name: userCredential.user.displayName,
-          role: 'admin'
-          //   claims: get_id_token()
-        })
-
         const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
-        router.push('/')
+
+        userCredential.user
+          .getIdTokenResult(true)
+          .then(res => {
+            if (res.claims) {
+              setUser({
+                email: userCredential.user.email,
+                user_id: userCredential.user.uid,
+                photoURL: userCredential.user.photoURL,
+                tel: userCredential.user.phoneNumber,
+                email_verified: userCredential.user.emailVerified,
+                name: userCredential.user.displayName,
+                company: res.claims.company ? res.claims.company : '',
+                role: res.claims.role ? res.claims.role : 'guest',
+                is_ariadne: res.claims.is_ariadne ? res.claims.is_ariadne : false,
+                username: res.claims.username ? res.claims.username : null
+              })
+              // setLoading(false)
+            } else {
+              setUser({
+                email: userCredential.user.email,
+                user_id: userCredential.user.uid,
+                photoURL: userCredential.user.photoURL,
+                tel: userCredential.user.phoneNumber,
+                email_verified: userCredential.user.emailVerified,
+                name: userCredential.user.displayName,
+                role: 'guest',
+                is_ariadne: false,
+                username: null
+              })
+              // setLoading(false)
+            }
+          })
+          .catch(e => console.log(e))
+
+        if (user) {
+          router.push(redirectURL)
+          // setLoading(false)
+        }
       })
       .catch(err => {
         if (errorCallback) errorCallback(err)
@@ -105,8 +165,8 @@ const AuthFirebaseProvider = ({ children }) => {
   const handleLogout = () => {
     setLoading(true)
     setUser(null)
-    auth.signOut()
     router.replace('/login')
+    auth.signOut()
   }
 
   const handleRegister = (params, errorCallback) => {
